@@ -1,6 +1,6 @@
 package invoice;
 
-enum VatRate {
+public enum VatRate {
     STANDARD,
     REDUCED,
     ZERO

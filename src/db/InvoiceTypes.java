@@ -2,8 +2,9 @@ package db;
 
 import invoice.VatInvoice;
 import invoice.PrepaymentInvoice;
+import models.Filterable;
 
-public enum InvoiceTypes {
+public enum InvoiceTypes implements Filterable {
     VAT(VatInvoice.class),
     PREPAYMENT(PrepaymentInvoice.class);
 

@@ -1,13 +1,10 @@
 package app;
 
-import java.util.Scanner;
-
 abstract class Menu {
     private final String[] options;
     private final boolean submenu;
-    final static Scanner scanner = new Scanner(System.in);
 
-    public Menu(String[] options, boolean submenu) {
+    Menu(String[] options, boolean submenu) {
         this.options = options;
         this.submenu = submenu;
     }

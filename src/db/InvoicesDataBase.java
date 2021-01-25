@@ -3,20 +3,17 @@ package db;
 import invoice.Invoice;
 import invoice.PrepaymentInvoice;
 import invoice.VatInvoice;
+import utils.StringUtil;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class InvoicesDataBase extends DataBase<Invoice, InvoiceTypes> {
-    static final private List<Invoice> invoices = new ArrayList<>();
-
     private String getInvoiceDetail(Invoice invoice) {
         return String.format("ID: %s, Email: %s, Price: %s", invoice.getId(), invoice.getIssueDate(), invoice.getPrice());
     }
 
     private void displayVatInvoice(VatInvoice invoice) {
-        System.out.printf("%s, Vat rate: %s%n", getInvoiceDetail(invoice), invoice.getRate());
+        System.out.printf("%s, Vat rate: %s%n", getInvoiceDetail(invoice), StringUtil.capitalize(invoice.getRate().toString()));
     }
 
     private void displayPrepaymentInvoice(PrepaymentInvoice invoice) {
@@ -40,39 +37,14 @@ public class InvoicesDataBase extends DataBase<Invoice, InvoiceTypes> {
     }
 
     @Override
-    public Invoice create(Invoice invoice) {
-        invoices.add(invoice);
-        return invoice;
-    }
-
-    @Override
     public void read() {
-        displayInvoices(invoices);
+        displayInvoices(items);
     }
 
-    @Override
     public void readByType(InvoiceTypes invoiceType) {
-        List<Invoice> filteredInvoices = invoices
-                .stream()
-                .filter(invoice -> invoice.getClass() == invoiceType.getType())
-                .collect(Collectors.toList());
+        List<Invoice> filteredInvoices = filterItemsByType(invoiceType);
 
         displayInvoices(filteredInvoices);
     }
 
-    @Override
-    public Invoice delete(String id) {
-        Invoice invoiceToDelete = invoices.stream()
-                .filter(invoice -> id.equals(invoice.getId()))
-                .findFirst()
-                .orElse(null);
-
-        if (invoiceToDelete == null) {
-            System.out.println("No invoice");
-            return null;
-        }
-
-        invoices.remove(invoiceToDelete);
-        return invoiceToDelete;
-    }
 }

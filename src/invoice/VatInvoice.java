@@ -3,7 +3,7 @@ package invoice;
 public class VatInvoice extends Invoice {
     private VatRate rate;
 
-    VatInvoice(int price, VatRate rate) {
+    public VatInvoice(double price, VatRate rate) {
         super(price);
         this.setRate(rate);
     }

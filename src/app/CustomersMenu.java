@@ -5,6 +5,7 @@ import customer.Customer;
 import customer.PrivateCustomer;
 import db.CustomerTypes;
 import db.CustomersDataBase;
+import utils.GetNumberFromUserUtil;
 import utils.GetStringFromUserUtil;
 
 import java.util.regex.Pattern;
@@ -50,17 +51,21 @@ public class CustomersMenu extends Menu implements Menuable {
     public void initialize() {
         int choice;
 
-        do {
-            this.showOptions();
-            choice = scanner.nextInt();
-            switch (choice) {
-                case 1 -> customersDataBase.read();
-                case 2 -> customersDataBase.readByType(CustomerTypes.BUSINESS);
-                case 3 -> customersDataBase.readByType(CustomerTypes.PRIVATE);
-                case 4 -> createCustomer(CustomerTypes.BUSINESS);
-                case 5 -> createCustomer(CustomerTypes.PRIVATE);
-                case 6 -> deleteCustomer();
-            }
-        } while (choice != this.getOptionsLength() + 1);
+        try {
+            do {
+                this.showOptions();
+                choice = GetNumberFromUserUtil.getInt("Select option:");
+                switch (choice) {
+                    case 1 -> customersDataBase.read();
+                    case 2 -> customersDataBase.readByType(CustomerTypes.BUSINESS);
+                    case 3 -> customersDataBase.readByType(CustomerTypes.PRIVATE);
+                    case 4 -> createCustomer(CustomerTypes.BUSINESS);
+                    case 5 -> createCustomer(CustomerTypes.PRIVATE);
+                    case 6 -> deleteCustomer();
+                }
+            } while (choice != this.getOptionsLength() + 1);
+        } catch (java.util.InputMismatchException error) {
+            System.out.println(error.getMessage());
+        }
     }
 }

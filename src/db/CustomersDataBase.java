@@ -4,13 +4,9 @@ import customer.BusinessCustomer;
 import customer.Customer;
 import customer.PrivateCustomer;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class CustomersDataBase extends DataBase<Customer, CustomerTypes> {
-    static final private List<Customer> customers = new ArrayList<>();
-
     private String getCustomerDetail(Customer customer) {
         return String.format("ID: %s, Email: %s", customer.getId(), customer.getEmail());
     }
@@ -40,39 +36,13 @@ public class CustomersDataBase extends DataBase<Customer, CustomerTypes> {
     }
 
     @Override
-    public Customer create(Customer customer) {
-        customers.add(customer);
-        return customer;
-    }
-
-    @Override
     public void read() {
-        displayCustomers(customers);
+        displayCustomers(items);
     }
 
-    @Override
     public void readByType(CustomerTypes customerType) {
-        List<Customer> filteredCustomers = customers
-                .stream()
-                .filter(customer -> customer.getClass() == customerType.getType())
-                .collect(Collectors.toList());
+        List<Customer> filteredCustomers = filterItemsByType(customerType);
 
         displayCustomers(filteredCustomers);
-    }
-
-    @Override
-    public Customer delete(String id) {
-        Customer customerToDelete = customers.stream()
-                .filter(customer -> id.equals(customer.getId()))
-                .findFirst()
-                .orElse(null);
-
-        if (customerToDelete == null) {
-            System.out.println("No customer");
-            return null;
-        }
-
-        customers.remove(customerToDelete);
-        return customerToDelete;
     }
 }

@@ -2,8 +2,9 @@ package db;
 
 import customer.BusinessCustomer;
 import customer.PrivateCustomer;
+import models.Filterable;
 
-public enum CustomerTypes {
+public enum CustomerTypes implements Filterable {
     BUSINESS(BusinessCustomer.class),
     PRIVATE(PrivateCustomer.class);
 

@@ -8,9 +8,9 @@ import java.util.Date;
 public abstract class Invoice implements Itemable {
     private final String id;
     private String issueDate;
-    private int price;
+    private double price;
 
-    public Invoice(int price) {
+    public Invoice(double price) {
         this.id = GenerateIDUtil.generateId();
         this.setPrice(price);
         this.setIssueDate(new Date().toString());
@@ -24,11 +24,11 @@ public abstract class Invoice implements Itemable {
         this.issueDate = issueDate;
     }
 
-    public int getPrice() {
+    public double getPrice() {
         return price;
     }
 
-    public void setPrice(int price) {
+    public void setPrice(double price) {
         this.price = price;
     }
 

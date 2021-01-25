@@ -1,18 +1,18 @@
 package invoice;
 
 public class PrepaymentInvoice extends Invoice {
-    private int advance;
+    private double advance;
 
-    PrepaymentInvoice(int price, int advance) {
+    public PrepaymentInvoice(double price, double advance) {
         super(price);
         this.setAdvance(advance);
     }
 
-    public int getAdvance() {
+    public double getAdvance() {
         return advance;
     }
 
-    public void setAdvance(int advance) {
+    public void setAdvance(double advance) {
         this.advance = advance;
     }
 }
