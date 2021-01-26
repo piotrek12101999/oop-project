@@ -2,22 +2,22 @@ package app;
 
 abstract class Menu {
     private final String[] options;
-    private final boolean submenu;
+    private final boolean isSubmenu;
 
-    Menu(String[] options, boolean submenu) {
+    Menu(String[] options, boolean isSubmenu) {
         this.options = options;
-        this.submenu = submenu;
+        this.isSubmenu = isSubmenu;
     }
 
     void showOptions() {
         StringBuilder formattedOptions = new StringBuilder();
-        for (int i = 0; i < this.options.length; i++) {
-            formattedOptions.append(String.format("%s. %s \n", i + 1, this.options[i]));
+        for (int i = 0; i < options.length; i++) {
+            formattedOptions.append(String.format("%s. %s \n", i + 1, options[i]));
         }
-        System.out.printf("%s%s. %s%n", formattedOptions.toString(), this.options.length+1, this.submenu ? "Back" : "Exit");
+        System.out.printf("%s%s. %s%n", formattedOptions.toString(), options.length+1, isSubmenu ? "Back" : "Exit");
     }
 
     protected int getOptionsLength() {
-        return this.options.length;
+        return options.length;
     }
 }

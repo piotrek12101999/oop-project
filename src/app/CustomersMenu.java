@@ -24,8 +24,8 @@ public class CustomersMenu extends Menu implements models.Menu {
     }
 
     private String getTaxID() {
-        Pattern nipPattern = Pattern.compile("^[0-9]{10}$");
-        return GetStringFromUserUtil.getData("Enter tax id", true, nipPattern);
+        Pattern taxIDPattern = Pattern.compile("^[0-9]{10}$");
+        return GetStringFromUserUtil.getData("Enter tax id", true, taxIDPattern);
     }
 
     private void createCustomer(CustomerTypes customerType) {
