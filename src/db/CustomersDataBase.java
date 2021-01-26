@@ -7,6 +7,14 @@ import customer.PrivateCustomer;
 import java.util.List;
 
 public class CustomersDataBase extends DataBase<Customer, CustomerTypes> {
+    private final static CustomersDataBase customersDataBase = new CustomersDataBase();
+
+    private CustomersDataBase() {}
+
+    public static CustomersDataBase getInstance() {
+        return customersDataBase;
+    }
+
     private String getCustomerDetail(Customer customer) {
         return String.format("ID: %s, Email: %s", customer.getId(), customer.getEmail());
     }
@@ -27,22 +35,8 @@ public class CustomersDataBase extends DataBase<Customer, CustomerTypes> {
         }
     }
 
-    private void displayCustomers(List<Customer> customers) {
-        if (customers.size() == 0) {
-            System.out.println("There aren't any customers");
-        } else {
-            customers.forEach(this::displayCustomer);
-        }
-    }
-
     @Override
-    public void read() {
-        displayCustomers(items);
-    }
-
-    public void readByType(CustomerTypes customerType) {
-        List<Customer> filteredCustomers = filterItemsByType(customerType);
-
-        displayCustomers(filteredCustomers);
+    public void display(List<Customer> items) {
+        items.forEach(this::displayCustomer);
     }
 }

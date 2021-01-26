@@ -1,6 +1,5 @@
 package utils;
 
-import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class GetNumberFromUserUtil {
@@ -10,21 +9,13 @@ public class GetNumberFromUserUtil {
         return console;
     }
 
-    public static int getInt(String message) throws InputMismatchException {
+    public static int getInt(String message) {
         Scanner console = handleInputCreation(message);
-        try {
-            return console.nextInt();
-        } catch (java.util.InputMismatchException error) {
-            throw new InputMismatchException("Please provide number");
-        }
+        return console.nextInt();
     }
 
-    public static double getDouble(String message) throws InputMismatchException {
+    public static double getDouble(String message) {
         Scanner console = handleInputCreation(message);
-        try {
-            return console.nextDouble();
-        } catch (java.util.InputMismatchException error) {
-            throw new InputMismatchException("Please provide number");
-        }
+        return console.nextDouble();
     }
 }

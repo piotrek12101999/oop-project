@@ -1,15 +1,19 @@
 package app;
 
 import utils.GetNumberFromUserUtil;
+import java.util.InputMismatchException;
 
-public class MainMenu extends Menu implements Menuable {
-    private final InvoicesMenu invoicesMenu = new InvoicesMenu();
-    private final CustomersMenu customersMenu = new CustomersMenu();
+public class MainMenu extends Menu implements models.Menu {
+    private final models.Menu invoicesMenu;
+    private final models.Menu customersMenu;
 
-    public MainMenu() {
+    public MainMenu(models.Menu invoicesMenu, models.Menu customersMenu) {
         super(new String[]{"Go to invoices", "Go to customers"}, false);
+        this.invoicesMenu = invoicesMenu;
+        this.customersMenu = customersMenu;
     }
 
+    @Override
     public void initialize() {
         int choice;
 
@@ -22,8 +26,8 @@ public class MainMenu extends Menu implements Menuable {
                     case 2 -> this.customersMenu.initialize();
                 }
             } while (choice != this.getOptionsLength() + 1);
-        } catch (java.util.InputMismatchException error) {
-            System.out.println(error.getMessage());
+        } catch (InputMismatchException error) {
+            System.out.println("Provide number");
         }
     }
 }

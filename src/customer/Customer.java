@@ -1,9 +1,9 @@
 package customer;
 
 import utils.GenerateIDUtil;
-import models.Itemable;
+import models.Item;
 
-public abstract class Customer implements Itemable {
+public abstract class Customer implements Item {
     private final String id;
     private String email;
 

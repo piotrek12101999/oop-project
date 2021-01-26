@@ -8,6 +8,14 @@ import utils.StringUtil;
 import java.util.List;
 
 public class InvoicesDataBase extends DataBase<Invoice, InvoiceTypes> {
+    private final static InvoicesDataBase invoicesDataBase = new InvoicesDataBase();
+
+    private InvoicesDataBase() {}
+
+    public static InvoicesDataBase getInstance() {
+        return invoicesDataBase;
+    }
+
     private String getInvoiceDetail(Invoice invoice) {
         return String.format("ID: %s, Email: %s, Price: %s", invoice.getId(), invoice.getIssueDate(), invoice.getPrice());
     }
@@ -28,23 +36,8 @@ public class InvoicesDataBase extends DataBase<Invoice, InvoiceTypes> {
         }
     }
 
-    private void displayInvoices(List<Invoice> invoices) {
-        if (invoices.size() == 0) {
-            System.out.println("There aren't any invoices");
-        } else {
-            invoices.forEach(this::displayInvoice);
-        }
-    }
-
     @Override
-    public void read() {
-        displayInvoices(items);
+    public void display(List<Invoice> invoices) {
+        invoices.forEach(this::displayInvoice);
     }
-
-    public void readByType(InvoiceTypes invoiceType) {
-        List<Invoice> filteredInvoices = filterItemsByType(invoiceType);
-
-        displayInvoices(filteredInvoices);
-    }
-
 }

@@ -1,21 +1,22 @@
 package app;
 
 import db.InvoiceTypes;
-import db.InvoicesDataBase;
 import invoice.Invoice;
 import invoice.PrepaymentInvoice;
 import invoice.VatInvoice;
 import invoice.VatRate;
+import models.DataBase;
 import utils.GetNumberFromUserUtil;
 import utils.GetStringFromUserUtil;
 import utils.StringUtil;
 
 import java.util.InputMismatchException;
 
-public class InvoicesMenu extends Menu implements Menuable {
-    private final InvoicesDataBase invoicesDataBase = new InvoicesDataBase();
-    public InvoicesMenu() {
+public class InvoicesMenu extends Menu implements models.Menu {
+    private final DataBase invoicesDataBase;
+    public InvoicesMenu(DataBase invoicesDataBase) {
         super(new String[]{"List invoices","List vat invoices","List prepayment invoice", "Add vat invoice","Add prepayment invoice" , "Delete invoice"}, true);
+        this.invoicesDataBase = invoicesDataBase;
     }
 
     private static VatRate selectVatRate() throws InputMismatchException {
@@ -26,7 +27,7 @@ public class InvoicesMenu extends Menu implements Menuable {
 
         int choice = GetNumberFromUserUtil.getInt("Select VAT rate");
 
-        if (choice > 3 || choice <= 0) {
+        if (choice > options.length || choice <= 0) {
             throw new InputMismatchException("Incorrect option");
         }
         return options[choice - 1];
@@ -54,10 +55,11 @@ public class InvoicesMenu extends Menu implements Menuable {
 
     private void deleteInvoice() {
         String id = GetStringFromUserUtil.getData("Enter invoice id", false, null);
-        Invoice deletedInvoice = invoicesDataBase.delete(id);
+        Invoice deletedInvoice = (Invoice) invoicesDataBase.delete(id);
         System.out.printf("Invoice with ID: %s, has been deleted%n", deletedInvoice.getId());
     }
 
+    @Override
     public void initialize() {
         int choice;
 
@@ -74,8 +76,8 @@ public class InvoicesMenu extends Menu implements Menuable {
                     case 6 -> deleteInvoice();
                 }
             } while (choice != this.getOptionsLength() + 1);
-        } catch (java.util.InputMismatchException error) {
-            System.out.println(error.getMessage());
+        } catch (InputMismatchException error) {
+            System.out.println("Please provide number");
         }
     }
 }

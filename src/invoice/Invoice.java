@@ -1,11 +1,11 @@
 package invoice;
 
 import utils.GenerateIDUtil;
-import models.Itemable;
+import models.Item;
 
 import java.util.Date;
 
-public abstract class Invoice implements Itemable {
+public abstract class Invoice implements Item {
     private final String id;
     private String issueDate;
     private double price;
