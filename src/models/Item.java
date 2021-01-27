@@ -1,5 +1,5 @@
 package models;
 
-public interface Itemable {
+public interface Item {
     String getId();
 }

@@ -1,31 +1,54 @@
 package db;
 
 import models.Filterable;
-import models.Itemable;
+import models.Item;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public abstract class DataBase<T extends Itemable, S extends Filterable> {
-    final protected List<T> items = new ArrayList<>();
+abstract class DataBase<T extends Item, S extends Filterable> implements models.DataBase<T, S> {
+    final private List<T> items = new ArrayList<>();
 
+    public abstract void display(List<T> items);
+
+    private List<T> getItemsByType(S type) {
+        return items
+                .stream()
+                .filter(item -> item.getClass() == type.getType())
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public void read() {
+        if (items.size() == 0) {
+            System.out.println("Couldn't find any records");
+        } else {
+            display(items);
+        }
+    }
+
+    @Override
+    public void readByType(S type) {
+        List<T> filteredItems = getItemsByType(type);
+
+        if (filteredItems.size() == 0) {
+            System.out.println("Couldn't find any records");
+        } else {
+            display(filteredItems);
+        }
+    }
+
+    @Override
     public T create(T item) {
         items.add(item);
         return item;
     }
 
-    public abstract void read();
-
-    protected List<T> filterItemsByType(S itemType) {
-        return items
-            .stream()
-            .filter(item -> item.getClass() == itemType.getType())
-            .collect(Collectors.toList());
-    }
-
+    @Override
     public T delete(String id) {
-        T itemToDelete = items.stream()
+        T itemToDelete = items
+                .stream()
                 .filter(item -> id.equals(item.getId()))
                 .findFirst()
                 .orElse(null);
