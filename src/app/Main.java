@@ -11,7 +11,7 @@ public class Main {
         DataBase invoicesDataBase = InvoicesDataBase.getInstance();
         Menu customersMenu = new CustomersMenu(customersDataBase);
         Menu invoicesMenu = new InvoicesMenu(invoicesDataBase);
-        Menu mainMenu = new MainMenu(customersMenu, invoicesMenu);
+        Menu mainMenu = new MainMenu(invoicesMenu, customersMenu);
 
         mainMenu.initialize();
     }

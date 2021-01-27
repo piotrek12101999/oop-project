@@ -8,7 +8,7 @@ public class MainMenu extends Menu implements models.Menu {
     private final models.Menu customersMenu;
 
     public MainMenu(models.Menu invoicesMenu, models.Menu customersMenu) {
-        super(new String[]{"Go to invoices", "Go to customers"}, false);
+        super(new String[]{"Go to invoices", "Go to customers"}, false, null);
         this.invoicesMenu = invoicesMenu;
         this.customersMenu = customersMenu;
     }

@@ -12,12 +12,8 @@ abstract class DataBase<T extends Item, S extends Filterable> implements models.
 
     public abstract void display(List<T> items);
 
-    private List<T> getItems() {
-        return items;
-    }
-
     private List<T> getItemsByType(S type) {
-        return getItems()
+        return items
                 .stream()
                 .filter(item -> item.getClass() == type.getType())
                 .collect(Collectors.toList());
@@ -25,10 +21,10 @@ abstract class DataBase<T extends Item, S extends Filterable> implements models.
 
     @Override
     public void read() {
-        if (getItems().size() == 0) {
+        if (items.size() == 0) {
             System.out.println("Couldn't find any records");
         } else {
-            display(getItems());
+            display(items);
         }
     }
 
@@ -36,18 +32,22 @@ abstract class DataBase<T extends Item, S extends Filterable> implements models.
     public void readByType(S type) {
         List<T> filteredItems = getItemsByType(type);
 
-        display(filteredItems);
+        if (filteredItems.size() == 0) {
+            System.out.println("Couldn't find any records");
+        } else {
+            display(filteredItems);
+        }
     }
 
     @Override
     public T create(T item) {
-        getItems().add(item);
+        items.add(item);
         return item;
     }
 
     @Override
     public T delete(String id) {
-        T itemToDelete = getItems()
+        T itemToDelete = items
                 .stream()
                 .filter(item -> id.equals(item.getId()))
                 .findFirst()
@@ -58,7 +58,7 @@ abstract class DataBase<T extends Item, S extends Filterable> implements models.
             return null;
         }
 
-        getItems().remove(itemToDelete);
+        items.remove(itemToDelete);
         return itemToDelete;
     }
 }

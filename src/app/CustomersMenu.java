@@ -14,7 +14,7 @@ import java.util.regex.Pattern;
 public class CustomersMenu extends Menu implements models.Menu {
     private final DataBase customersDataBase;
     public CustomersMenu(DataBase customersDataBase) {
-        super(new String[]{"List customers", "List business customers", "List private customers" ,"Add business customer", "Add private customer" , "Delete customer"}, true);
+        super(new String[]{"List customers", "List business customers", "List private customers" ,"Add business customer", "Add private customer" , "Delete customer"}, true, customersDataBase);
         this.customersDataBase = customersDataBase;
     }
 
@@ -47,7 +47,9 @@ public class CustomersMenu extends Menu implements models.Menu {
     private void deleteCustomer() {
         String id = GetStringFromUserUtil.getData("Enter user id", false, null);
         Customer deletedCustomer = (Customer) customersDataBase.delete(id);
-        System.out.printf("Customer with ID: %s, has been deleted%n", deletedCustomer.getId());
+        if (deletedCustomer != null) {
+            System.out.printf("Customer with ID: %s, has been deleted%n", deletedCustomer.getId());
+        }
     }
 
     @Override

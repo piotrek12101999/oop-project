@@ -15,7 +15,7 @@ import java.util.InputMismatchException;
 public class InvoicesMenu extends Menu implements models.Menu {
     private final DataBase invoicesDataBase;
     public InvoicesMenu(DataBase invoicesDataBase) {
-        super(new String[]{"List invoices","List vat invoices","List prepayment invoice", "Add vat invoice","Add prepayment invoice" , "Delete invoice"}, true);
+        super(new String[]{"List invoices","List vat invoices","List prepayment invoice", "Add vat invoice","Add prepayment invoice" , "Delete invoice"}, true, invoicesDataBase);
         this.invoicesDataBase = invoicesDataBase;
     }
 
@@ -53,12 +53,6 @@ public class InvoicesMenu extends Menu implements models.Menu {
         }
     }
 
-    private void deleteInvoice() {
-        String id = GetStringFromUserUtil.getData("Enter invoice id", false, null);
-        Invoice deletedInvoice = (Invoice) invoicesDataBase.delete(id);
-        System.out.printf("Invoice with ID: %s, has been deleted%n", deletedInvoice.getId());
-    }
-
     @Override
     public void initialize() {
         int choice;
@@ -73,7 +67,7 @@ public class InvoicesMenu extends Menu implements models.Menu {
                     case 3 -> invoicesDataBase.readByType(InvoiceTypes.PREPAYMENT);
                     case 4 -> createInvoice(InvoiceTypes.VAT);
                     case 5 -> createInvoice(InvoiceTypes.PREPAYMENT);
-                    case 6 -> deleteInvoice();
+                    case 6 -> deleteItem();
                 }
             } while (choice != this.getOptionsLength() + 1);
         } catch (InputMismatchException error) {
