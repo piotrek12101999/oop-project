@@ -19,8 +19,7 @@ abstract class DataBase<T extends Item, S extends Filterable> implements models.
                 .collect(Collectors.toList());
     }
 
-    @Override
-    public void read() {
+    private void handleItemsDisplay(List<T> items) {
         if (items.size() == 0) {
             System.out.println("Couldn't find any records");
         } else {
@@ -29,14 +28,15 @@ abstract class DataBase<T extends Item, S extends Filterable> implements models.
     }
 
     @Override
+    public void read() {
+        handleItemsDisplay(items);
+    }
+
+    @Override
     public void readByType(S type) {
         List<T> filteredItems = getItemsByType(type);
 
-        if (filteredItems.size() == 0) {
-            System.out.println("Couldn't find any records");
-        } else {
-            display(filteredItems);
-        }
+        handleItemsDisplay(filteredItems);
     }
 
     @Override
